@@ -11,7 +11,7 @@
                   <label for="" class="mt-2 ml-1 my-0"> <strong> Name </strong></label>
                 </div>
                 <center>
-                  <input type="text"
+                  <input type="text" v-model="form.name"
                     class="form-control mt-2 text-center w-50" style="font-size:15px;" name="" id="" aria-describedby="helpId" placeholder="Your Name">
                 </center>
                 </div>
@@ -19,17 +19,17 @@
                   <label for="" class="mt-2 ml-1 my-0"> <strong> Email </strong></label>
                 </div>
                 <center>
-                <input type="email"
+                <input type="email" v-model="form.email"
                     class="form-control w-50 mb-4 text-center" style="font-size:15px;" name="" id="" aria-describedby="helpId" placeholder="Your Email">
                 </center>
                 <div class="d-flex flex-column">
                   <label for="" class="mt-2 ml-1 my-0"> <strong> Password </strong></label>
                 </div>
                 <center>
-                <input type="password"
+                <input type="password" v-model="form.password"
                     class="form-control w-50  text-center" style="font-size:15px;" name="" id="" aria-describedby="helpId" placeholder="Your Password">
                 </center>
-                <button type="button" class="btn btn-primary mt-4 mb-3">Register</button>
+                <button @click="register" type="button" class="btn btn-primary mt-4 mb-3">Register</button>
                 <br>
                 <p>sudah memiliki account?
                     <button @click="$router.push('/user/login')" type="button" class="btn btn-secondary btn-sm">
@@ -64,13 +64,49 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+import Swal from 'sweetalert2'
 export default {
     name: 'login',
     data() {
         return {
-            myHTML: ''
+          form : {
+            name : '',
+            email : '',
+            password : ''
+          }
         }
     },
+    methods: {
+      register(){
+        this.$store.dispatch('registerUser',this.form)
+        .then(({ data })=>{
+           const Toast = Swal.mixin({
+                  toast: true,
+                  position: 'top-end',
+                  showConfirmButton: false,
+                  timer: 3000,
+                  timerProgressBar: true,
+                  onOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                  }
+                })
+                Toast.fire({
+                  icon: 'success',
+                  title: 'Reqgister is successfully'
+                })
+                this.$router.push('/user/login')
+          })
+          .catch(_=>{
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: "Register is Failed!"
+            });
+          })
+      }
+    }
 }
 </script>
 

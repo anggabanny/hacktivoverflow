@@ -70,12 +70,12 @@ export default {
     methods: {
         login(){
             let form = {
-                email : this.email,
-                password : this.password
+              email : this.email,
+              password : this.password
             }
             this.$store.dispatch('loginUser', form)
-                .then(user=>{
-                    const Toast = Swal.mixin({
+                .then(({ data })=>{
+                const Toast = Swal.mixin({
                   toast: true,
                   position: 'top-end',
                   showConfirmButton: false,
@@ -91,7 +91,7 @@ export default {
                   title: 'Login in successfully'
                 })
                   localStorage.setItem('token', data.token)
-                  // this.$store.commit('SET_LOGIN')
+                  this.$store.commit('SET_LOGIN')
                   this.$router.push('/')
                 })
                 .catch(_=>{

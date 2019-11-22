@@ -4,6 +4,7 @@ const router = require('express').Router()
 
 router.get('/',quesController.readAll)
 router.use(authentication)
+router.get('/:id',quesController.readOne)
 router.post('/',quesController.create)
 router.patch('/:id/voteup',quesController.updateVotesUp)
 router.patch('/:id/votedown',quesController.updateVotesDown)

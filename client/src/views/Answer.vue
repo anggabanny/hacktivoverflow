@@ -29,11 +29,11 @@
         <div class="main-mid-top">
         <div class="d-flex pt-3 pb-3">
           <div class="col d-flex flex-row">
-            <h3 class="text-left ml-3">Top Questions</h3>
-              <button type="button" v-if="isLogin" class="btn btn-primary ml-auto" @click="$router.push('/ask')">Ask Question</button>
+            <h3 class="text-left ml-3">{{ title }}</h3>
+              <button type="button" v-if="!isLogin" class="btn btn-primary ml-auto" @click="$router.push('/ask')">Ask Question</button>
           </div>
         </div>
-        <div class="row">
+        <div class="row" v-if="!isLogin">
           <div class="col-7">
           </div>
           <div class="col">

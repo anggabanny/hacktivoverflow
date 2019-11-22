@@ -11,7 +11,7 @@
                   <label for="" class="mt-2 ml-1 my-0"> <strong> Title </strong></label>
                   <label for="" class="ml-1 my-0" style="font-size:12px;">Be specific and imagine you’re asking a question to another person</label>
                 </div>
-                  <input type="text"
+                  <input type="text" v-model="title"
                     class="form-control" style="font-size:15px;" name="" id="" aria-describedby="helpId" placeholder="e.g. Is there an R function for finding the index of an element in a vector?">
                 </div>
                 <div class="mt-2">
@@ -26,16 +26,16 @@
                     {{ myHTML }}
                     <hr>
                 </div>
-                <div class="d-flex flex-column">
-                  <label for="" class="mt-2 ml-1 my-0"> <strong> Tags </strong></label>
-                  <label for="" class="ml-1 my-0" style="font-size:12px;">Add up to tags to describe what your question is about</label>
-                </div>
-                <input type="text"
-                    class="form-control mb-5" style="font-size:15px;" name="" id="" aria-describedby="helpId" placeholder="e.g. (reactjs html5 mongodb)">
+                <!-- <div class="d-flex flex-column"> -->
+                  <!-- <label for="" class="mt-2 ml-1 my-0"> <strong> Tags </strong></label> -->
+                  <!-- <label for="" class="ml-1 my-0" style="font-size:12px;">Add up to tags to describe what your question is about</label> -->
+                <!-- </div> -->
+                <!-- <input type="text" -->
+                    <!-- class="form-control mb-5" style="font-size:15px;" name="" id="" aria-describedby="helpId" placeholder="e.g. (reactjs html5 mongodb)"> -->
             </b-form>
           </div>
           <div class="text-left ml-1 mt-3">
-            <button type="button" class="btn btn-primary mt-3">Review your question</button>
+            <button @click="create" type="button" class="btn btn-primary mt-3">Review your question</button>
           </div>
       </div>
       <div class="col-3 mt-5">
@@ -63,13 +63,51 @@
 </template>
 
 <script>
+import Swal from 'sweetalert2'
+import { mapState } from 'vuex'
 export default {
     name: 'question',
     data() {
         return {
-            myHTML: ''
+            myHTML: '',
+            title : ''
         }
     },
+    methods: {
+      create(){
+        let form = {
+          title : this.title,
+          description : this.myHTML
+        }
+        this.$store.dispatch('createQuestion', form)
+          .then(({ data })=>{
+            const Toast = Swal.mixin({
+                  toast: true,
+                  position: 'top-end',
+                  showConfirmButton: false,
+                  timer: 3000,
+                  timerProgressBar: true,
+                  onOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                  }
+                })
+                Toast.fire({
+                  icon: 'success',
+                  title: 'Create in successfully'
+                })
+                this.$router.push('/')
+                this.$store.dispatch('allQuestion')
+          })
+          .catch(_=>{
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Signin Failed!"
+            });
+          })
+      }
+    }
 }
 </script>
 

@@ -178,5 +178,18 @@ module.exports = {
             res.status(200).json(result)
         })
         .catch(next)
+    },
+    readOne(req,res,next){
+        QuesModel.findOne({
+            _id : req.params.id
+        })
+        .populate('votesUp')
+        .populate('votesDown')
+        .populate('stars')
+        .populate('userId')
+        .then(question=>{
+            res.status(200).json(question)
+        })
+        .catch(next)
     }
 }

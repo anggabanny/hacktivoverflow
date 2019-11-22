@@ -33,6 +33,11 @@ const routes = [
       }
     ]
   },
+  {
+    path: '/answer',
+    name: 'answer',
+    component: () => import(/* webpackChunkName: "question" */ '../views/Answer.vue')
+  },
 ]
 
 const router = new VueRouter({
