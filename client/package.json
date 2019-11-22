@@ -12,6 +12,7 @@
     "bootstrap": "^4.3.1",
     "bootstrap-vue": "^2.1.0",
     "core-js": "^3.3.2",
+    "cron": "^1.7.2",
     "sweetalert2": "^9.3.17",
     "vue": "^2.6.10",
     "vue-router": "^3.1.3",

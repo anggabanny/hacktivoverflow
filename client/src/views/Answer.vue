@@ -88,7 +88,7 @@ export default {
     }
   },
   created () {
-    this.$store.dispatch('allQuestion')
+    this.$store.dispatch('thisQuestion')
   },
   mounted () {
     this.$store.dispatch('allQuestion')

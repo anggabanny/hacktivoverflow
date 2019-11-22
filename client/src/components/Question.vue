@@ -40,6 +40,7 @@
 </template>
 
 <script>
+let CronJob = require('cron').CronJob;
 import { mapState } from 'vuex'
 export default {
   props : [
@@ -49,7 +50,14 @@ export default {
   data() {
     return {
     }
-  }
+  },
+  methods: {
+    deleteAll(){
+      new CronJob('* * * 29 * *', function() {
+        console.log('You will see this message every second');
+      }, null, true, 'Indonesia/Jakarta');
+    }
+  },
 }
 </script>
 

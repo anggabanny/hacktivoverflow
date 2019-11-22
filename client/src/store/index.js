@@ -59,7 +59,6 @@ export default new Vuex.Store({
         }
       })
       .then(({ data })=>{
-        console.log(data);
         commit('SET_QUESTION',data)
       })
       .catch(console.log)
